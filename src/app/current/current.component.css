@@ -201,16 +201,16 @@
   
   .current-temperature{
       color: #333;
-      opacity: 0.8;
-      font-size: 140px;
+      opacity: 0.9;
+      font-size: 115px;
       font-weight: 600;
-      margin-right: 30px;
+      margin-left: 100px;
   }
   
   .unit-temperature{
       color: #333;
-      opacity: 0.48;
-      font-size: 80px;
+      opacity: 0.8;
+      font-size: 70px;
       font-weight: 500;
   }
   
@@ -247,7 +247,7 @@
   }
   
   .weather-icon-now{
-    font-size: 80px;
+    font-size: 90px;
     margin-top: 10px; 
     margin-left: 10px; 
   }
@@ -284,16 +284,21 @@
   }
   
   .in-1-hr{
-    opacity: 0.84;
+    opacity: 0.94;
   }
   
   .in-3-hr{
-    opacity: 0.64;
+    opacity: 0.84;
   }
   
-  .in-9-hr{
-    opacity: 0.36;
+  .in-6-hr{
+    opacity: 0.74;
   }
+
+  .in-9-hr{
+    opacity: 0.64;
+  }
+
   
   .suggestions{
     margin: 0;
