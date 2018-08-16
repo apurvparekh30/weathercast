@@ -1,15 +1,32 @@
 <div class="wcast">
     <div id="gradient" class="gradient"></div>
-    <!-- Loadin screen
-    <div class="loading">
-        Spinner
+    <!-- Loading screen and  spinner -->
+    <div class="loading" *ngIf="!weatherLoaded">
+       
         <div class="spinner" >
             <div class="loader">
-            <div class="double-bounce1"></div>
-            <div class="double-bounce2"></div>
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </div> 
+    </div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 no-right-padding no-left-padding" style="z-index: 10;">
+                    <div class="card-no-margin card-2">
+                        <span class="faint small">
+                            <i *ngIf="!locationDenied" class="medium material-icons action-icons test" (click)="userInput.value=''; goToMyLocation();">my_location</i>
+                        </span>
+                        <div class="row">
+                            <input [placeholder]="usrInp" #userInput type="text" class="inp-solid small" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>  -->
-    <div class="galaxy">
-        <app-current></app-current>
+        <div *ngIf="weatherLoaded">
+            <app-current></app-current>
+        </div>
     </div>
 </div>

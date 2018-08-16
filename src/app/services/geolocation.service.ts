@@ -1,27 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Http,Jsonp } from '@angular/http';
+import { Http, Jsonp } from '@angular/http';
 import { map, catchError } from 'rxjs/operators';
 import { Observable,of } from 'rxjs'
-import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
+export class GeolocationService {
 
-export class WeatherService {
-  
-  serverUrl = 'http://localhost:3000';
+  gl_url = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+  gc_url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
 
   constructor(private _jsonp: Jsonp, private _http: Http) { }
 
-  getWeather(lat: string, lng: string){
-    let params = new HttpParams();
-    params = params.set('lat',lat);
-    params = params.set('lng',lng) 
-    return this._http.get(this.serverUrl,{params})
+  getCoordinates(name:string) {
+    return this._http.get(this.gl_url+name)
+    .pipe(
+      map(response => response.json()),
+      catchError(this.handleError<any>('Error while getting Coordinates from name'))
+    );
+  }
+
+  getLocation(lat: string, long: string){
+    return this._http.get(this.gc_url+lat+","+long)
     .pipe(
       map(res => res.json()),
-      catchError(this.handleError<any>('Error in getting Weather Details'))
+      catchError(this.handleError<any>('Error in getting name from Location'))
     );
   }
 
@@ -34,5 +38,4 @@ export class WeatherService {
       return of(result as T);
     };
   }
-
 }
