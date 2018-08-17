@@ -10,15 +10,15 @@ import { HttpParams } from '@angular/common/http';
 
 export class WeatherService {
   
-  serverUrl = 'http://localhost:3000';
+  serverUrl = 'http://localhost:3000/';
 
   constructor(private _jsonp: Jsonp, private _http: Http) { }
 
-  getWeather(lat: string, lng: string){
-    let params = new HttpParams();
-    params = params.set('lat',lat);
-    params = params.set('lng',lng) 
-    return this._http.get(this.serverUrl,{params})
+  getWeather(lat: string, lng: string){ 
+    /* let params = new HttpParams();
+    params = params.append('lat',lat);
+    params = params.append('lng',lng); */
+    return this._http.get(this.serverUrl+"lat/"+lat+"/lng/"+lng)
     .pipe(
       map(res => res.json()),
       catchError(this.handleError<any>('Error in getting Weather Details'))

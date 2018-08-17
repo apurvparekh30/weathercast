@@ -21,12 +21,13 @@
                         <div class="row">
                             <input [placeholder]="usrInp" #userInput type="text" class="inp-solid small" />
                         </div>
+                        <span class = "small">{{ invalid_message }}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div *ngIf="weatherLoaded">
-            <app-current></app-current>
+        <div>
+            <app-current [weatherloaded]=weatherLoaded></app-current>
         </div>
     </div>
 </div>

@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
     //other variables
     locationDenied: boolean = false;
     usrInp: string;
-    weatherLoaded:boolean = false;
+    weatherLoaded:boolean;
+    invalid_message:string = '';
 
     // location information for user input and current location
     usr_lat:string; 
@@ -72,13 +73,18 @@ export class AppComponent implements OnInit {
       if(cityName!=""){
         this._gs.getCoordinates(cityName).subscribe(
           res => {
+            //console.log(res.status);
             if(res.status==="OK"){
+              this.invalid_message ='';
+              this.setBusy();
               this.usr_lat=res.results[0].geometry.location.lat;
               this.usr_lng=res.results[0].geometry.location.lng;
               this.wd_location = res.results[0].formatted_address;          
               this.getWeather(this.usr_lat,this.usr_lng);
             }
-            else console.log("Invalid Input");
+            else{
+              this.invalid_message ='Please Enter Valid Input or Click Icon';
+            } 
           },
           err => {
             console.log("Error while fetching Location by Name");
@@ -98,8 +104,8 @@ export class AppComponent implements OnInit {
             this.getWeather(this.curr_lat,this.curr_lng);
           }
           else {
-            console.log("Error fetching User location information");
-          }
+            console.log("Error fetching User location information" + res.status);
+          } 
         },
         err => {
           console.log("Error fetching city from location");
@@ -111,8 +117,14 @@ export class AppComponent implements OnInit {
     getWeather(lat:string,lng:string){
       this._ws.getWeather(lat,lng).subscribe(
         res => {
-          console.log(res);
-          this.setIdle();
+          //console.log(res);
+          //this.onWeatherGet();
+          this.wd_currently = res.currently;
+          this.wd_timezone = res.timezone;
+          this.wd_hourly = res.hourly;
+          this.wd_daily = res.daily;
+          //console.log(this.wd_currently);
+          this.onWeatherGet();
         }
       )
     }
@@ -156,8 +168,9 @@ export class AppComponent implements OnInit {
 
     // Hide spinner
     setIdle(){
-      setTimeout(function() {
+      this.weatherLoaded = true;
+      /* setTimeout(function() {
         this.weatherLoaded = true;
-      }.bind(this), 100);
+      }.bind(this), 100); */
     }
 }

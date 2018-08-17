@@ -8,10 +8,14 @@ export class CommunicationService {
 
   private weatherSource = new Subject<any>();
 
-  weatherData$ = this.weatherSource.asObservable();
+  notifyObservable = this.weatherSource.asObservable();
 
   public communicate(wd:any) {
     this.weatherSource.next(wd);
   }
 
 }
+
+// change class for weather
+// change in location service
+// server code optimization

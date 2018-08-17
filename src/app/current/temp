@@ -1,0 +1,36 @@
+<!--3 hrs later icon-->
+						<div class="col-sm-0 col-md-4 col-lg-4 center-div">
+							<span class="small">In 3 Hours</span><br/>
+							<div class="weather-icons in-3-hr test .hidden-md">
+								<i *ngIf="wd_weatherData_3hr.icon === 'partly-cloudy-day'" class="wi wi-day-sunny-overcast weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'partly-cloudy-night'" class="wi wi-night-alt-cloudy weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'rain'" class="wi wi-rain test weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'clear-day'" class="wi wi-day-sunny weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'clear-night'" class="wi wi-night-clear weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'fog'" class="wi wi-fog weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'sleet'" class="wi sleet weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'wind'" class="wi wi-strong-wind weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'snow'" class="wi wi-snowflake-cold weather-icon"></i>
+								<i *ngIf="wd_weatherData_3hr.icon === 'cloudy'" class="wi wi-cloud weather-icon"></i><br/>
+								<span class="small">{{wd_weatherData_3hr.summary}}</span>
+							</div>
+						</div>
+
+
+						<!--9 hrs later icon-->
+						<div class="col-sm-0 col-md-4 col-lg-4 center-div">
+							<span class="small">In 9 Hours</span><br/>
+							<div class="weather-icons in-9-hr test .hidden-md">
+								<i *ngIf="wd_weatherData_9hr.icon === 'partly-cloudy-day'" class="wi wi-day-sunny-overcast weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'partly-cloudy-night'" class="wi wi-night-alt-cloudy weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'rain'" class="wi wi-rain test weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'clear-day'" class="wi wi-day-sunny weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'clear-night'" class="wi wi-night-clear weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'fog'" class="wi wi-fog weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'sleet'" class="wi sleet weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'wind'" class="wi wi-strong-wind weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'snow'" class="wi wi-snowflake-cold weather-icon"></i>
+								<i *ngIf="wd_weatherData_9hr.icon === 'cloudy'" class="wi wi-cloud weather-icon"></i><br/>
+							</div>
+							<span class="small" style="margin-top: -20;">{{wd_weatherData_9hr.summary}}</span>
+						</div>

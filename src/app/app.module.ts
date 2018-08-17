@@ -6,6 +6,8 @@ import { CurrentComponent } from './current/current.component';
 import { HttpClientModule } from '@angular/common/http'
 import { HttpModule } from '@angular/http';
 import { JsonpModule } from '@angular/http';
+import { CommunicationService } from './services/communication.service';
+import { NgPipesModule } from 'ngx-pipes';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,10 @@ import { JsonpModule } from '@angular/http';
     BrowserModule,
     HttpClientModule,
     HttpModule,
-    JsonpModule
+    JsonpModule,
+    NgPipesModule
   ],
-  providers: [],
+  providers: [CommunicationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
