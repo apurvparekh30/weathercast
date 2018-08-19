@@ -8,11 +8,13 @@ import { HttpModule } from '@angular/http';
 import { JsonpModule } from '@angular/http';
 import { CommunicationService } from './services/communication.service';
 import { NgPipesModule } from 'ngx-pipes';
+import { DailyComponent } from './daily/daily.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CurrentComponent
+    CurrentComponent,
+    DailyComponent
   ],
   imports: [
     BrowserModule,

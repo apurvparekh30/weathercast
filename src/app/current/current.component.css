@@ -18,18 +18,13 @@
   
   .card-no-margin {
     margin: 0px;
-    margin-left: 25%;
-    margin-right: 25%;
-    padding: 10px 20px 10px 16px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 10px 16px 10px 16px;
     position: relative;
     border: 0;
     border-radius: 0;
-  }
-
-  
-
-  .card-no-margin:last-child {
-    margin-bottom: 5px;
+    width:97.5%;
   }
   
   .card:first-child {
@@ -203,7 +198,7 @@
       opacity: 0.9;
       font-size: 100px;
       font-weight: 600;
-      margin-left: 50px;
+      margin-left: 80px;
   }
   
   .unit-temperature{

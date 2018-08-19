@@ -1,26 +1,30 @@
 <span id="current-weather" style="display: none;">{{ wd_icon_now }}</span>
 <div class="container" *ngIf=weatherloaded>
 	<div class="row">
-		
-		<div class="col-sm-12 col-md-12 col-lg-12 no-right-padding no-left-padding" style="z-index: 10;">
+		<div class="col-sm-12 col-md-12 col-lg-6 no-right-padding test" style="z-index: 10;">
 			<div class="card-no-margin card-2">
 				<span class="small">Location:</span><br>{{wd_location}}
-			</div>	
-			<div class="card-no-margin card-2 test">
+			</div>
+			<div class="card-no-margin card-3">
+				<span class="small">Current Time:</span><br>{{ wd_currently.time * 1000 | date: 'medium' }} (Timezone : {{ wd_timezone }})
+				<br/>
 				<span class="small">Right now: </span><br>
+				{{ wd_currently.summary }}
+			</div>
+			<div class="card-no-margin card-4 test">
 				<div class="row">
 					<div class="col-sm-12 col-md-3 col-lg-5">
 						<div class="weather-icons-now test">
-							<i *ngIf="wd_icon_now === 'partly-cloudy-day'" class="wi wi-day-sunny-overcast weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'partly-cloudy-night'" class="wi wi-night-alt-cloudy weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'rain'" class="wi wi-rain test weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'clear-day'" class="wi wi-day-sunny weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'clear-night'" class="wi wi-night-clear weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'fog'" class="wi wi-fog weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'sleet'" class="wi sleet weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'wind'" class="wi wi-strong-wind weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'snow'" class="wi wi-snowflake-cold weather-icon-now" ></i>
-							<i *ngIf="wd_icon_now === 'cloudy'" class="wi wi-cloud weather-icon-now" ></i><br/>
+							<i *ngIf="wd_icon_now === 'partly-cloudy-day'" class="wi wi-day-sunny-overcast weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'partly-cloudy-night'" class="wi wi-night-alt-cloudy weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'rain'" class="wi wi-rain test weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'clear-day'" class="wi wi-day-sunny weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'clear-night'" class="wi wi-night-clear weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'fog'" class="wi wi-fog weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'sleet'" class="wi sleet weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'wind'" class="wi wi-strong-wind weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'snow'" class="wi wi-snowflake-cold weather-icon-now"></i>
+							<i *ngIf="wd_icon_now === 'cloudy'" class="wi wi-cloud weather-icon-now"></i><br/>
 							<span class="small">{{wd_summ_now}}</span>
 						</div>
 					</div>
@@ -28,14 +32,20 @@
 						<span class="current-temperature">{{wd_temp_now}}<sup>o</sup>F</span>
 					</div>
 				</div>
-				
+
 			</div>
-			<div class="card-no-margin card-3">
-				<span class="small">In Few Hours: </span><br>{{wd_hourly.summary}}
-				<div class="col-sm-12 col-md-9 col-lg-8  center-div">
-						
+		</div>
+		<div class="col-sm-12 col-md-12 col-lg-6 no-right-padding test" style="z-index: 10;">
+			<div class="col-sm-12 col-md-12 col-lg-12 no-right-padding no-left-padding">
+				<div class="card-no-margin card-2">
+					<span class="small">In Few Hours: </span><br>{{wd_hourly.summary}}
+				</div>
+				<div class="card-no-margin card-3">
+
+					<div class="col-sm-12 col-md-9 col-lg-8  center-div">
+
 						<div class="row  center-div">
-							
+
 							<!--1 hr later icon-->
 							<div class="col-sm-0 col-md-4 col-lg-3 center-div">
 								<div class="weather-icons in-1-hr test">
@@ -103,40 +113,33 @@
 									<span class="small">In 9 hrs</span>
 								</div>
 							</div>
-							
-						</div>
-				</div>
-				<!-- row -->
-			</div>
-			<div class="card-no-margin card-5">
-				<div class="row">
-					<div class="col-sm-4 col-md-4 col-lg-4 no-padding">
-						<div class="card card-3">
-							<span class="small">Humidity:</span> 
-							{{ wd_currently.humidity * 100 | round  }} %
-						</div>
-						<div class="card card-4">
-							<span class="small">Wind speed:</span>
-							{{ wd_currently.windSpeed }} mph
-						</div>
-						<div class="card card-5">
-							<span class="small">Visibility:</span>
-							{{ wd_currently.visibility }} / 10
+
 						</div>
 					</div>
-					<div class="col-sm-7 col-md-7 col-lg-7 no-padding">
-						<div class="card card-5">
-							<span class="small">Cloud cover:</span>
-							{{ wd_currently.cloudCover * 100 | round }} %
+					<!-- row -->
+				</div>
+				<div class="card-no-margin card-5">
+					<div class="row">
+						<div class="col-sm-4 col-md-4 col-lg-4 no-padding">
+							<div class="card card-3">
+								<span class="small">Humidity:</span>
+								{{ wd_currently.humidity * 100 | round }} %
+							</div>
+							<div class="card card-4">
+								<span class="small">Wind speed:</span>
+								{{ wd_currently.windSpeed }} mph
+							</div>
+							
 						</div>
-						<div class="card card-6">
-							<span class="small">Timezone:</span>
-							{{ wd_timezone }}
-						</div>
-						<div class="card card-7">
-							<span class="small">Current time:</span>
-							{{ wd_currently.time * 1000 | date: 'medium' }}
-							<br>
+						<div class="col-sm-7 col-md-7 col-lg-7 no-padding">
+							<div class="card card-5">
+								<span class="small">Cloud cover:</span>
+								{{ wd_currently.cloudCover * 100 | round }} %
+							</div>
+							<div class="card card-5">
+								<span class="small">Visibility:</span>
+								{{ wd_currently.visibility }} / 10
+							</div>
 						</div>
 					</div>
 				</div>

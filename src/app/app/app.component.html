@@ -2,18 +2,23 @@
     <div id="gradient" class="gradient"></div>
     <!-- Loading screen and  spinner -->
     <div class="loading" *ngIf="!weatherLoaded">
-       
-        <div class="spinner" >
+
+        <div class="spinner">
             <div class="loader">
                 <div class="double-bounce1"></div>
                 <div class="double-bounce2"></div>
             </div>
-        </div> 
+        </div>
     </div>
     <div>
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 no-right-padding no-left-padding" style="z-index: 10;">
+                <div class="col-sm-12 col-md-12 col-lg-6 no-right-padding test" style="z-index: 10;">
+                    <div class="card-no-margin card-2">
+                            Welcome to WeatherCast weather app. See real-time weather and weather history for any location on the planet Earth.
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 no-right-padding test" style="z-index: 10;">
                     <div class="card-no-margin card-2">
                         <span class="faint small">
                             <i *ngIf="!locationDenied" class="medium material-icons action-icons test" (click)="userInput.value=''; goToMyLocation();">my_location</i>
@@ -21,13 +26,14 @@
                         <div class="row">
                             <input [placeholder]="usrInp" #userInput type="text" class="inp-solid small" />
                         </div>
-                        <span class = "small">{{ invalid_message }}</span>
+                        <span class="small">{{ invalid_message }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div>
             <app-current [weatherloaded]=weatherLoaded></app-current>
+            <app-daily [weatherloaded]=weatherLoaded></app-daily>
         </div>
     </div>
 </div>

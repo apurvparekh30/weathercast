@@ -47,6 +47,7 @@ export class CurrentComponent implements OnInit,OnDestroy {
   }
 
   onWeatherGet(res){
+    
     this.wd_currently = res.wd_currently;
     this.wd_daily = res.wd_daily;
     this.wd_hourly = res.wd_hourly;
@@ -88,10 +89,10 @@ export class CurrentComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit() {
-
   }
 
   ngOnDestroy(){
+    console.log("currently " + this.weatherloaded);
     this.subscription.unsubscribe();
   }
 }
