@@ -47,14 +47,14 @@ export class AppComponent implements OnInit {
     private _gs: GeolocationService,
     private _cs: CommunicationService
   ) {
-    console.log("in constructor");
-    if(navigator.geolocation){
+    this.goToMyLocation();
+    /* if(navigator.geolocation){
       this.goToMyLocation();
     }
     else{
       console.log("user denied location");
       this.locationDenied=true;
-    }
+    } */
   }
 
   ngOnInit() {
@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
           this.wd_location = res.Response.View[0].Result[0].Location.Address.Label;
           this.curr_lat = res.Response.View[0].Result[0].Location.NavigationPosition[0].Latitude;
           this.curr_lng = res.Response.View[0].Result[0].Location.NavigationPosition[0].Longitude;
-          this.getWeather(this.curr_lat,this.curr_lng);
+          this.getWeather(this.curr_lat, this.curr_lng);
         },
         err => {
           console.log("Error orccured " + err);
@@ -112,7 +112,7 @@ export class AppComponent implements OnInit {
         this.wd_daily = res.daily;
         this.onWeatherGet();
       },
-      err=>{
+      err => {
         console.log("Error loading weather data " + err);
       }
     )
@@ -134,7 +134,20 @@ export class AppComponent implements OnInit {
   goToMyLocation() {
     this.setBusy();
     this.usrInp = 'Change Location .. '
-    if (navigator.geolocation) {
+    this._gs.getCurrentPosition().subscribe(
+      res => {
+        this.curr_lat = res.latitude.toString();
+        this.curr_lng = res.longitude.toString();
+        this.getNameByLocation(this.curr_lat, this.curr_lng);
+      },
+      err => {
+        this.setIdle();
+        console.log(err)
+      }
+    );
+
+
+    /* if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         this.curr_lat = pos.coords.latitude.toString();
         this.curr_lng = pos.coords.longitude.toString();
@@ -147,7 +160,7 @@ export class AppComponent implements OnInit {
     else {
       this.setIdle();
       console.log("User has denied the location permission");
-    }
+    } */
   }
 
   // Show spinner

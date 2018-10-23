@@ -9,10 +9,10 @@ import { Observable, of } from 'rxjs'
 })
 export class GeolocationService {
 
-   constructor(private _http: Http) { }
+  constructor(private _http: Http) { }
 
   getCoordinates(text: string) {
-    var requestUrl = 'http://weatherserver.us-east-2.elasticbeanstalk.com/coordinates?text='+text;
+    var requestUrl = 'http://weatherserver.us-east-2.elasticbeanstalk.com/coordinates?text=' + text;
     return this._http.get(requestUrl).pipe(
       map(res => res.json())
     );
@@ -20,10 +20,28 @@ export class GeolocationService {
 
   getLocation(lat: string, lng: string) {
     var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/location";
-    requestUrl+="?lat="+lat+"&lng="+lng;
+    requestUrl += "?lat=" + lat + "&lng=" + lng;
     return this._http.get(requestUrl).pipe(
       map(res => res.json())
     );
+  }
+
+  getCurrentPosition() {
+    var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/mylocation";
+    //console.log(requestUrl);
+    return this._http.get(requestUrl).pipe(
+      map(
+        res => res.json()
+      ));
+    /* var requestUrll = "https://api.ipify.org?format=json";
+    this._http.get(requestUrll).subscribe(
+      res=>{
+        console.log(res.json().ip.toString() + " hello")
+      },
+      err=>{
+        console.log(err + " world")
+      }
+    ) */
   }
 
 }
