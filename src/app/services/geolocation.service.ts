@@ -1,41 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Http, Jsonp } from '@angular/http';
+import { Http, Jsonp, RequestOptions, Headers } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { Observable,of } from 'rxjs'
+import { Observable, of } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeolocationService {
 
-  gl_url = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-  gc_url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='
+   constructor(private _http: Http) { }
 
-  constructor(private _jsonp: Jsonp, private _http: Http) { }
-
-  getCoordinates(name:string) {
-    return this._http.get(this.gl_url+name)
-    .pipe(
-      map(response => response.json()),
-      catchError(this.handleError<any>('Error while getting Coordinates from name'))
+  getCoordinates(text: string) {
+    var requestUrl = 'http://weatherserver.us-east-2.elasticbeanstalk.com/coordinates?text='+text;
+    return this._http.get(requestUrl).pipe(
+      map(res => res.json())
     );
   }
 
-  getLocation(lat: string, long: string){
-    return this._http.get(this.gc_url+lat+","+long)
-    .pipe(
-      map(res => res.json()),
-      catchError(this.handleError<any>('Error in getting name from Location'))
+  getLocation(lat: string, lng: string) {
+    var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/location";
+    requestUrl+="?lat="+lat+"&lng="+lng;
+    return this._http.get(requestUrl).pipe(
+      map(res => res.json())
     );
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
- 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }

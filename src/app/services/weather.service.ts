@@ -11,28 +11,16 @@ import { HttpParams } from '@angular/common/http';
 export class WeatherService {
   
   serverUrl = 'http://localhost:3000/';
+  //serverUrl = "ec2-18-218-94-32.us-east-2.compute.amazonaws.com:3000/"
 
-  constructor(private _jsonp: Jsonp, private _http: Http) { }
+  constructor(private _http: Http) { }
 
   getWeather(lat: string, lng: string){ 
-    /* let params = new HttpParams();
-    params = params.append('lat',lat);
-    params = params.append('lng',lng); */
-    return this._http.get(this.serverUrl+"lat/"+lat+"/lng/"+lng)
-    .pipe(
-      map(res => res.json()),
-      catchError(this.handleError<any>('Error in getting Weather Details'))
-    );
-  }
-
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
- 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+      var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/weather";
+      requestUrl+="?lat="+lat+"&lng="+lng;
+      return this._http.get(requestUrl).pipe(
+        map(res => res.json())
+      );
   }
 
 }

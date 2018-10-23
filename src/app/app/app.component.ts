@@ -13,164 +13,150 @@ import 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  
-    @ViewChild('userInput') userInput: ElementRef;
 
-    //other variables
-    locationDenied: boolean = false;
-    usrInp: string;
-    weatherLoaded:boolean;
-    invalid_message:string = '';
+  @ViewChild('userInput') userInput: ElementRef;
 
-    // location information for user input and current location
-    usr_lat:string; 
-    usr_lng:string;
-    curr_lat:string;
-    curr_lng:string;
 
-    // publishable weather data
-    wd_data:any; 
+  locationDenied: boolean = false;
 
-    //Weather Metadata
-    wd_currently: any = [];
-    wd_hourly: any = [];
-    wd_daily: any = [];
+  //other variables
+  usrInp: string;
+  weatherLoaded: boolean;
+  invalid_message: string = '';
 
-    // Weather Data
-    wd_location: string;
-    wd_timezone: string;
+  // location information for user input and current location
+  usr_lat: string;
+  usr_lng: string;
+  curr_lat: string;
+  curr_lng: string;
 
-    constructor(
-                private _ws:WeatherService, 
-                private _gs:GeolocationService,
-                private _cs:CommunicationService
-              ){
+  // publishable weather data
+  wd_data: any;
 
-      //Place Holder for Input
-      this.usrInp = 'Change Location... ';
+  //Weather Metadata
+  wd_currently: any = [];
+  wd_hourly: any = [];
+  wd_daily: any = [];
 
-      // check if location access is allowed
-      if(navigator.geolocation){
-        this.goToMyLocation();
-      }
-      else {
-        this.locationDenied=true;
-      } 
+  // Weather Data
+  wd_location: string;
+  wd_timezone: string;
+
+  constructor(
+    private _ws: WeatherService,
+    private _gs: GeolocationService,
+    private _cs: CommunicationService
+  ) {
+    console.log("in constructor");
+    if(navigator.geolocation){
+      this.goToMyLocation();
     }
+    else{
+      console.log("user denied location");
+      this.locationDenied=true;
+    }
+  }
 
-    ngOnInit(){
-      // listen for user input
-      let obs$ = fromEvent(this.userInput.nativeElement,'input')
+  ngOnInit() {
+    // listen for user input
+    let obs$ = fromEvent(this.userInput.nativeElement, 'input')
       .pipe(
-        map((e:any) => e.target.value),
+        map((e: any) => e.target.value),
         debounceTime(1000),
         distinctUntilChanged()
-      ).subscribe((txt:string) => this.getLocationbyName(txt));
-    }
+      ).subscribe((txt: string) => {
+        this.setBusy();
+        this.getCoordinates(txt)
+      });
+  }
 
-    // get coordinates from user input
-    getLocationbyName(cityName:string){
-      if(cityName!=""){
-        this._gs.getCoordinates(cityName).subscribe(
-          res => {
-            //console.log(res.status);
-            if(res.status==="OK"){
-              this.invalid_message ='';
-              this.setBusy();
-              this.usr_lat=res.results[0].geometry.location.lat;
-              this.usr_lng=res.results[0].geometry.location.lng;
-              this.wd_location = res.results[0].formatted_address;          
-              this.getWeather(this.usr_lat,this.usr_lng);
-            }
-            else{
-              this.invalid_message ='Please Enter Valid Input or Click Icon';
-            } 
-          },
-          err => {
-            console.log("Error while fetching Location by Name");
-          }
-        );
-      }
-      else {
-        this.goToMyLocation();
-      }
-    }
-
-    getNameByLocation(lat:string,lng:string){
-      this._gs.getLocation(lat,lng).subscribe(
+  // get coordinates from user input
+  getCoordinates(cityName: string) {
+    if (cityName != "") {
+      this._gs.getCoordinates(cityName).subscribe(
         res => {
-          if(res.status === "OK"){
-            this.wd_location = res.results[0].formatted_address;
-            this.getWeather(this.curr_lat,this.curr_lng);
-          }
-          else {
-            console.log("Error fetching User location information" + res.status);
-          } 
+          this.wd_location = res.Response.View[0].Result[0].Location.Address.Label;
+          this.curr_lat = res.Response.View[0].Result[0].Location.NavigationPosition[0].Latitude;
+          this.curr_lng = res.Response.View[0].Result[0].Location.NavigationPosition[0].Longitude;
+          this.getWeather(this.curr_lat,this.curr_lng);
         },
         err => {
-          console.log("Error fetching city from location");
-        }
-      );
-    }
-
-    // get weather data from coordinates
-    getWeather(lat:string,lng:string){
-      this._ws.getWeather(lat,lng).subscribe(
-        res => {
-          //console.log(res);
-          //this.onWeatherGet();
-          this.wd_currently = res.currently;
-          this.wd_timezone = res.timezone;
-          this.wd_hourly = res.hourly;
-          this.wd_daily = res.daily;
-          //console.log(this.wd_currently);
-          this.onWeatherGet();
+          console.log("Error orccured " + err);
         }
       )
     }
-
-    onWeatherGet(){
-      // communicate this data with other
-      this.wd_data = {
-        wd_currently:this.wd_currently,
-        wd_hourly:this.wd_hourly,
-        wd_daily:this.wd_daily,
-        wd_location:this.wd_location,
-        wd_timezone:this.wd_timezone
-      };
-      this._cs.communicate(this.wd_data);
-      this.setIdle();
+    else {
+      this.goToMyLocation();
     }
+  }
 
-    goToMyLocation(){
-      this.setBusy();
-      this.usrInp='Change Location .. '
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition((pos)=>{
-          this.curr_lat = pos.coords.latitude.toString();
-          this.curr_lng = pos.coords.longitude.toString();
-          this.getNameByLocation(this.curr_lat,this.curr_lng);
-        },(err)=>{
-          this.setIdle();
-          console.log("Error Obtaining user current location");
-        });
+  getNameByLocation(lat: string, lng: string) {
+    this._gs.getLocation(lat, lng).subscribe(
+      res => {
+        this.wd_location = res.Response.View[0].Result[0].Location.Address.Label;
+        this.getWeather(this.curr_lat, this.curr_lng);
+      },
+      err => {
+        console.log("Error fetching User location information");
       }
-      else {
+    );
+  }
+
+  // get weather data from coordinates
+  getWeather(lat: string, lng: string) {
+    this._ws.getWeather(lat, lng).subscribe(
+      res => {
+        this.wd_currently = res.currently;
+        this.wd_timezone = res.timezone;
+        this.wd_hourly = res.hourly;
+        this.wd_daily = res.daily;
+        this.onWeatherGet();
+      },
+      err=>{
+        console.log("Error loading weather data " + err);
+      }
+    )
+  }
+
+  onWeatherGet() {
+    // communicate this data with other
+    this.wd_data = {
+      wd_currently: this.wd_currently,
+      wd_hourly: this.wd_hourly,
+      wd_daily: this.wd_daily,
+      wd_location: this.wd_location,
+      wd_timezone: this.wd_timezone
+    };
+    this._cs.communicate(this.wd_data);
+    this.setIdle();
+  }
+
+  goToMyLocation() {
+    this.setBusy();
+    this.usrInp = 'Change Location .. '
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        this.curr_lat = pos.coords.latitude.toString();
+        this.curr_lng = pos.coords.longitude.toString();
+        this.getNameByLocation(this.curr_lat, this.curr_lng);
+      }, (err) => {
         this.setIdle();
-        console.log("User has denied the location permission");
-      }
+        console.log("Error Obtaining user current location " + err);
+      });
     }
+    else {
+      this.setIdle();
+      console.log("User has denied the location permission");
+    }
+  }
 
-    // Show spinner
-    setBusy(){
-      this.weatherLoaded = false;
-    }
+  // Show spinner
+  setBusy() {
+    this.weatherLoaded = false;
+  }
 
-    // Hide spinner
-    setIdle(){
-      this.weatherLoaded = true;
-      /* setTimeout(function() {
-        this.weatherLoaded = true;
-      }.bind(this), 100); */
-    }
+  // Hide spinner
+  setIdle() {
+    this.weatherLoaded = true;
+  }
 }
