@@ -33,15 +33,24 @@ export class GeolocationService {
       map(
         res => res.json()
       ));
-    /* var requestUrll = "https://api.ipify.org?format=json";
-    this._http.get(requestUrll).subscribe(
+    /* var requestUrl = "https://api.ipify.org?format=json";
+    var ipaddress;
+    this._http.get(requestUrl).subscribe(
       res=>{
-        console.log(res.json().ip.toString() + " hello")
+        ipaddress = res.json().ip.toString();
+        console.log(ipaddress);
       },
       err=>{
-        console.log(err + " world")
+        console.log(err)
       }
-    ) */
+    ) 
+    var key = "7af6f2d92eeed85c576c533ad90cdfa1";
+    requestUrl = "http://api.ipstack.com/"+ipaddress+"?access_key="+key;
+    return this._http.get(requestUrl).pipe(
+      map(
+        res => res.json()
+      )
+    ); */
   }
 
 }

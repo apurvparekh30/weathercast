@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
     this._gs.getLocation(lat, lng).subscribe(
       res => {
         this.wd_location = res.Response.View[0].Result[0].Location.Address.Label;
-        this.getWeather(this.curr_lat, this.curr_lng);
+        this.onWeatherGet();
       },
       err => {
         console.log("Error fetching User location information");
@@ -136,31 +136,17 @@ export class AppComponent implements OnInit {
     this.usrInp = 'Change Location .. '
     this._gs.getCurrentPosition().subscribe(
       res => {
-        this.curr_lat = res.latitude.toString();
-        this.curr_lng = res.longitude.toString();
-        this.getNameByLocation(this.curr_lat, this.curr_lng);
+        this.wd_currently = res.currently;
+        this.wd_timezone = res.timezone;
+        this.wd_hourly = res.hourly;
+        this.wd_daily = res.daily;
+        this.getNameByLocation(res.latitude,res.longitude);
       },
       err => {
         this.setIdle();
-        console.log(err)
+        console.log(err);
       }
     );
-
-
-    /* if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        this.curr_lat = pos.coords.latitude.toString();
-        this.curr_lng = pos.coords.longitude.toString();
-        this.getNameByLocation(this.curr_lat, this.curr_lng);
-      }, (err) => {
-        this.setIdle();
-        console.log("Error Obtaining user current location " + err);
-      });
-    }
-    else {
-      this.setIdle();
-      console.log("User has denied the location permission");
-    } */
   }
 
   // Show spinner
