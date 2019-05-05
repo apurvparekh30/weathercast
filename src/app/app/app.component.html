@@ -15,13 +15,15 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6 no-right-padding test" style="z-index: 10;">
                     <div class="card-no-margin card-2">
-                            Welcome to WeatherCast weather app. See real-time weather and weather history for any location on the planet Earth.
+                        Welcome to WeatherCast weather app. See real-time weather and weather history for any location
+                        on the planet Earth.
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-6 no-right-padding test" style="z-index: 10;">
                     <div class="card-no-margin card-2">
                         <span class="faint small">
-                            <i *ngIf="!locationDenied" class="medium material-icons action-icons test" (click)="userInput.value=''; goToMyLocation();">my_location</i>
+                            <i *ngIf="!locationDenied" class="medium material-icons action-icons test"
+                                (click)="userInput.value=''; goToMyLocation();">my_location</i>
                         </span>
                         <div class="row">
                             <input [placeholder]="usrInp" #userInput type="text" class="inp-solid small" />

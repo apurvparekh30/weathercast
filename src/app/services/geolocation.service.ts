@@ -12,14 +12,14 @@ export class GeolocationService {
   constructor(private _http: Http) { }
 
   getCoordinates(text: string) {
-    var requestUrl = 'http://weatherserver.us-east-2.elasticbeanstalk.com/coordinates?text=' + text;
+    var requestUrl = 'http://weatherserver-env.spszbfpqr6.us-east-2.elasticbeanstalk.com//coordinates?text=' + text;
     return this._http.get(requestUrl).pipe(
       map(res => res.json())
     );
   }
 
   getLocation(lat: string, lng: string) {
-    var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/location";
+    var requestUrl = "http://weatherserver-env.spszbfpqr6.us-east-2.elasticbeanstalk.com//location";
     requestUrl += "?lat=" + lat + "&lng=" + lng;
     return this._http.get(requestUrl).pipe(
       map(res => res.json())
@@ -27,7 +27,7 @@ export class GeolocationService {
   }
 
   getCurrentPosition() {
-    var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/mylocation";
+    var requestUrl = "http://weatherserver-env.spszbfpqr6.us-east-2.elasticbeanstalk.com//mylocation";
     //console.log(requestUrl);
     return this._http.get(requestUrl).pipe(
       map(

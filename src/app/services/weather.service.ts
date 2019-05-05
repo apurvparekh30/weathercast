@@ -16,7 +16,7 @@ export class WeatherService {
   constructor(private _http: Http) { }
 
   getWeather(lat: string, lng: string){ 
-      var requestUrl = "http://weatherserver.us-east-2.elasticbeanstalk.com/weather";
+      var requestUrl = "http://weatherserver-env.spszbfpqr6.us-east-2.elasticbeanstalk.com/weather";
       requestUrl+="?lat="+lat+"&lng="+lng;
       return this._http.get(requestUrl).pipe(
         map(res => res.json())
